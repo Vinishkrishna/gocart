@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma"
-import authSeller from "@/middlewares/authSeller"
+import authSeller from "@/middleware/authSeller"
 import {getAuth} from "@clerk/nextjs/server"
 import imagekit from "@/configs/imageKit"
 import { NextResponse } from "next/server"
@@ -48,7 +48,7 @@ export async function POST(request){
                 mrp,
                 price,
                 category,
-                images: imagesUrl,
+                images: imageUrl,
                 storeId
             }
         })
