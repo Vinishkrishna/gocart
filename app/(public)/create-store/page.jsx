@@ -57,7 +57,12 @@ export default function CreateStore() {
                 setAlreadySubmitted(false)
             }
         } catch (error) {
-            toast.error(error?.response?.data?.error || error.message)
+            // If 404, it means no store exists yet, which is fine
+            if (error?.response?.status === 404) {
+                setAlreadySubmitted(false)
+            } else {
+                toast.error(error?.response?.data?.error || error.message)
+            }
         }
         setLoading(false)
     }

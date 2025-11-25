@@ -83,7 +83,7 @@ export async function GET(request) {
         if(store){
             return NextResponse.json({status: store.status})
         }
-        return NextResponse.json({error:error.code || error.message}, {status:400})
+        return NextResponse.json({message: "No store found"}, {status:404})
     } catch (error) {
         console.error(error);
         return NextResponse.json({error: error.code || error.message}, {status:400})

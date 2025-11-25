@@ -12,7 +12,7 @@ export async function GET(request) {
         if (!isSeller) {
             return NextResponse.json({error:'not authorized'},{status:401});
         }
-        const storeInfo = await prisma.store.findUnique({where:userId})
+        const storeInfo = await prisma.store.findUnique({where:{id: isSeller}})
         return NextResponse.json({isSeller,storeInfo})
     } catch (error) {
         console.error(error);

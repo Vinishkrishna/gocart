@@ -26,7 +26,7 @@ export async function POST(request){
         //Uploading Images to ImageKit
         const imageUrl = await Promise.all(images.map(async(image) => {
             const buffer = Buffer.from(await image.arrayBuffer());
-            const response = await imageKit.upload({
+            const response = await imagekit.upload({
                 file: buffer,
                 fileName: image.name,
                 folder: "products",
@@ -65,7 +65,7 @@ export async function GET(request){
         const { userId } = getAuth(request)
         const storeId = await authSeller(userId)
         if(!storeId){
-            return NextResponse.json({error:error.code || error.message}, {status:400})
+            return NextResponse.json({error:'not authorized'}, {status:401})
         }
         const products = await prisma.product.findMany({ where: { storeId }})
         return NextResponse.json({products})

@@ -1,12 +1,13 @@
 'use client'
 
-import { addToCart } from "@/lib/features/cart/cartSlice";
+import { addToCart, uploadCart } from "@/lib/features/cart/cartSlice";
 import { StarIcon, TagIcon, EarthIcon, CreditCardIcon, UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import Counter from "./Counter";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "@clerk/nextjs";
 
 const ProductDetails = ({ product }) => {
 
@@ -15,6 +16,7 @@ const ProductDetails = ({ product }) => {
 
     const cart = useSelector(state => state.cart.cartItems);
     const dispatch = useDispatch();
+    const { getToken } = useAuth();
 
     const router = useRouter()
 
@@ -22,6 +24,7 @@ const ProductDetails = ({ product }) => {
 
     const addToCartHandler = () => {
         dispatch(addToCart({ productId }))
+        dispatch(uploadCart({ getToken }))
     }
 
     const averageRating = product.rating.reduce((acc, item) => acc + item.rating, 0) / product.rating.length;
